@@ -1,0 +1,53 @@
+// Example Jenkinsfile — declarative pipeline with Docker CLI on the agent
+// Requires: Jenkins with Docker CLI available (agent image or mounted /var/run/docker.sock)
+// Credentials: dockerhub-credentials (Username with password — use access token as password)
+
+pipeline {
+    agent {
+        label 'docker'
+    }
+
+    environment {
+        IMAGE = "${DOCKERHUB_USER}/docker-practice-app"
+        TAG = "${env.BUILD_NUMBER}"
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Test') {
+            steps {
+                sh 'docker build --target test -t app:test .'
+                sh 'docker run --rm app:test npm test'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                script {
+                    docker.withRegistry('https://index.docker.io/v1/', 'dockerhub-credentials') {
+                        def customImage = docker.build("${IMAGE}:${TAG}")
+                        customImage.push()
+                        customImage.push('latest')
+                    }
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            sh 'docker image prune -f || true'
+        }
+        success {
+            echo "Pushed ${IMAGE}:${TAG} and ${IMAGE}:latest"
+        }
+        failure {
+            echo 'Pipeline failed — check build logs and registry credentials.'
+        }
+    }
+}

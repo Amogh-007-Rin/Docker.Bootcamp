@@ -1,0 +1,44 @@
+# Minimal Deployment + Service for local practice (Minikube, kind, or Desktop Kubernetes)
+# Apply: kubectl apply -f hello-k8s.yaml
+# Test:  kubectl port-forward service/hello 8080:80
+# Delete: kubectl delete -f hello-k8s.yaml
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello
+  labels:
+    app: hello
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: hello
+  template:
+    metadata:
+      labels:
+        app: hello
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.27-alpine
+          ports:
+            - containerPort: 80
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 2
+            periodSeconds: 5
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello
+spec:
+  selector:
+    app: hello
+  ports:
+    - port: 80
+      targetPort: 80
+  type: ClusterIP

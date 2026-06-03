@@ -1,0 +1,29 @@
+# Swarm stack: replicated web front-end with published port
+# Deploy: docker stack deploy -c swarm-stack.yaml webstack
+# Remove: docker stack rm webstack
+
+services:
+  web:
+    image: nginx:1.27-alpine
+    ports:
+      - "8080:80"
+    deploy:
+      replicas: 3
+      update_config:
+        parallelism: 1
+        delay: 10s
+        order: start-first
+      rollback_config:
+        parallelism: 1
+        delay: 5s
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+    networks:
+      - webnet
+
+networks:
+  webnet:
+    driver: overlay
+    attachable: true
