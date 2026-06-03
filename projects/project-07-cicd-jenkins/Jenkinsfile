@@ -1,0 +1,23 @@
+pipeline {
+  agent any
+  stages {
+    stage('Checkout') {
+      steps { checkout scm }
+    }
+    stage('Build image') {
+      steps {
+        sh 'docker build -t project01:jenkins ../project-01-nodejs-app'
+      }
+    }
+    stage('Push (optional)') {
+      when { branch 'main' }
+      steps {
+        withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DH_USER', passwordVariable: 'DH_PASS')]) {
+          sh 'echo $DH_PASS | docker login -u $DH_USER --password-stdin'
+          sh 'docker tag project01:jenkins $DH_USER/project01:jenkins'
+          sh 'docker push $DH_USER/project01:jenkins'
+        }
+      }
+    }
+  }
+}
