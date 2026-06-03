@@ -1,0 +1,13 @@
+services:
+  nginx:
+    build:
+      context: .
+      dockerfile: app/Dockerfile.hardened
+    ports:
+      - "8080:8080"
+    read_only: true
+    tmpfs:
+      - /var/cache/nginx
+      - /var/run
+    cap_drop:
+      - ALL

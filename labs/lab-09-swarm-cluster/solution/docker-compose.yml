@@ -1,0 +1,12 @@
+services:
+  web:
+    image: nginx:1.27-alpine
+    ports:
+      - "8080:80"
+    deploy:
+      replicas: 3
+      update_config:
+        parallelism: 1
+        delay: 10s
+      restart_policy:
+        condition: on-failure
