@@ -1,11 +1,18 @@
 # Docker Mastery
-*"Everything Docker. Zero to Production. Free forever."*
 
+[![Docker](https://d33wubrfki0l68.cloudfront.net/33282cd91fc50462bc515a615cccafa37fe07a63/3e476/images/logo.png "Docker")](htthttps://d33wubrfki0l68.cloudfront.net/33282cd91fc50462bc515a615cccafa37fe07a63/3e476/images/logo.pngp:// "Docker")
+
+-----------
+<p style="text-align:center;">*"Everything You Need To Master Docker. Zero To Production. Free Forever."*</p>
+
+------------
+<div style="display:flex; justify-content: center; gap: 5px;">
 [![Stars](https://img.shields.io/github/stars/Amogh-007-Rin/docker-practice?style=flat-square)](https://github.com/Amogh-007-Rin/docker-practice/stargazers)
 [![Forks](https://img.shields.io/github/forks/Amogh-007-Rin/docker-practice?style=flat-square)](https://github.com/Amogh-007-Rin/docker-practice/forks)
 [![License](https://img.shields.io/badge/license-MIT-green.svg?style=flat-square)](LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](CONTRIBUTING.md)
 [![Last Updated](https://img.shields.io/badge/last%20updated-2026--06--03-blue?style=flat-square)](project-execution.md)
+</div>
 
 ## What is this repository?
 You get a complete, free, and linear Docker curriculum from zero to production. You follow a single path that builds skill step by step without detours. You work through notes, labs, projects, quizzes, and scripts in one cohesive learning journey.
